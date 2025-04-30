@@ -1,0 +1,27 @@
+[project]
+name = "calcy"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "ANJALISAHU2004",email = "anjali1011sahu@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi (>=0.115.12,<0.116.0)",
+    "pillow (>=11.2.1,<12.0.0)",
+    "uvicorn (>=0.34.2,<0.35.0)",
+    "pydantic (>=2.11.3,<3.0.0)",
+    "google-generativeai (>=0.8.5,<0.9.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "calcy", from = "src"}]
+
+[tool.poetry.scripts]
+dev= "calcy.main:start"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
