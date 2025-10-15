@@ -1,6 +1,7 @@
 import { ColorSwatch, Group } from '@mantine/core';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import Draggable from './draggable.tsx';
 // import Draggable from 'react-draggable';
 // import { useDrag } from "@use-gesture/react";
 import DraggableLatex from './DraggableLatex';
@@ -9,6 +10,7 @@ import { Button } from '../components/ui/button';
 // import { useMathJax } from 'react-mathjax2';
 import {LazyBrush} from 'lazy-brush';
 import React from 'react';
+// import Draggable from './draggable.tsx';
 interface GeneratedResult {
     expression: string;
     answer: string;
@@ -30,7 +32,7 @@ export default function Home() {
     const [latexPosition, setLatexPosition] = useState({ x: 10, y: 200 });
     const [latexExpression, setLatexExpression] = useState<Array<string>>([]);
 
-    // const [positions, setPositions] = useState<{ x: number; y: number }[]>(
+    // const [latexPosition, setLatexPosition] = useState<{ x: number; y: number }[]>(
     //     latexExpression.map((_, index) => ({ x: 0, y: index * 50 }))
     //   );
     
@@ -162,7 +164,7 @@ export default function Home() {
     };  
 
     const runRoute = async () => {
-        console.log('Running route...'+import.meta.env.VITE_API_URL+"/1calculate");
+        console.log('Running route...'+import.meta.env.VITE_API_URL+"/calculate");
         const canvas = canvasRef.current;
         
         if (canvas) {
@@ -204,8 +206,9 @@ export default function Home() {
 
             const centerX = (minX + maxX) / 2;
             const centerY = (minY + maxY) / 2;
-
+          
             setLatexPosition({ x: centerX, y: centerY });
+            console.log('Latex Position:', latexPosition);  
             resp.data.forEach((data: Response) => {
                 setTimeout(() => {
                     setResult({
@@ -214,6 +217,7 @@ export default function Home() {
                     });
                 }, 100);
             });
+            
         }
     };
 
@@ -252,12 +256,15 @@ export default function Home() {
                 onMouseOut={stopDrawing}
             />
 
-{latexExpression &&
+{/* {latexExpression &&
   latexExpression.map((latex, index) => (
     <DraggableLatex key={index} latex={latex} index={index} />
-  ))}
+  ))} */}
 
-              
+      {latexExpression &&
+  latexExpression.map((latex, index) => (
+    <Draggable key={index} latex={latex} index={index} />
+  ))}     
 
         </>
     );
